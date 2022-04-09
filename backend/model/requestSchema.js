@@ -10,6 +10,7 @@ const requestSchema = new mongoose.Schema({
     enum: ['GET', 'POST', 'PUT', 'DELETE'],
     default: 'GET',
   },
+  frequency: Number,
   header: String,
   payload: String,
   auth: String,
