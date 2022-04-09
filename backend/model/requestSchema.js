@@ -6,7 +6,8 @@ const requestSchema = new mongoose.Schema({
     require: true,
   },
   method: {
-    type: ['GET', 'POST', 'PUT', 'DELETE'],
+    type: String,
+    enum: ['GET', 'POST', 'PUT', 'DELETE'],
     default: 'GET',
   },
   header: String,
@@ -15,6 +16,7 @@ const requestSchema = new mongoose.Schema({
   created: { type: Date, default: Date.now() },
 });
 
-mongoose.model('Request', requestSchema);
+
+export const mongooseRequestSchema = mongoose.model('Request', requestSchema);
 
 export default requestSchema;

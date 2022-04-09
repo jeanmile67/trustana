@@ -3,4 +3,13 @@ import requestController from '../controller/requestController.js';
 
 export const router = express.Router();
 
-router.get('/request', requestController);
+router.post('/api/request', function (req, res) {
+  requestController
+    .addRequest(req.body)
+    .then((data) => {
+      res.status(data.status).send({ message: data });
+    })
+    .catch((err) => {
+      res.status(err.status).send({ message: err.message });
+    });
+});
