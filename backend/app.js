@@ -1,6 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import { formatISO9075 } from 'date-fns';
 import { router as indexRoute } from './routes/paths.js';
+import pingTask from './service/scheduler.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -30,9 +32,11 @@ mongoose.connect(
 );
 
 app.listen(port, 'localhost', function (err) {
+  console.log(formatISO9075(Date.now(), { representation: 'time' }));
   if (err) {
     console.log(err);
     process.exit(-1);
   }
+
   console.log(`Server listening to port http://localhost:${port}`);
 });
