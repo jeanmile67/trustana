@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Trustana Case Study",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint --fix ."
+  },
+  "keywords": [
+    "Monitoring"
+  ],
+  "author": "Jean-Michel LE <jeanmile.le@pm.me>",
+  "license": "ISC",
+  "dependencies": {
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.10",
+    "prettier": "^2.6.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.12.0"
+  }
+}
