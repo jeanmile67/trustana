@@ -18,6 +18,7 @@
   "author": "Jean-Michel LE <jeanmile.le@pm.me>",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "express": "^4.17.3",
