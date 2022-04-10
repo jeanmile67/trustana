@@ -20,8 +20,6 @@ const requestController = {
         });
 
       return Promise.all([futureSaveQuery, futureJob]);
-        // .then(resolve('Request inserted & Job launch successfully'))
-        // .error(reject('Error inserting query or job does not launch'));
     });
   },
 };

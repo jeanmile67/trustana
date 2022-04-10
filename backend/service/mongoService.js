@@ -29,3 +29,21 @@ export const saveRequestResult = async (data) => {
       });
   });
 };
+
+// Save result on mongo
+// export const getResult = async (data) => {
+//   const requestResultSchema = mongooseRequestResultSchema(data);
+
+//   return new Promise((resolve, reject) => {
+//     requestResultSchema
+//       .find({})
+//       .limit(100)
+//       .then(() => {
+//         resolve({ status: 200, message: 'Result inserted Successfully' });
+//       })
+//       .catch((err) => {
+//         reject({ status: 500, message: `Error ${err}` });
+//       });
+//   });
+// };
+

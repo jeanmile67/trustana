@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const requestResultSchema = new mongoose.Schema({
-  jobId: String,
+  agendaJobId: mongoose.ObjectId,
   url: {
     type: String,
     require: true,
