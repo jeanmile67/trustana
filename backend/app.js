@@ -1,11 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import { formatISO9075 } from 'date-fns';
+import { EXPRESS_CONF, MONGO_CONF } from './config.js';
 import { router as indexRoute } from './routes/paths.js';
-import pingTask from './service/scheduler.js';
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = EXPRESS_CONF.port || 5000;
 
 app.use(
   express.urlencoded({
@@ -16,11 +16,11 @@ app.use(express.json());
 app.use(indexRoute);
 
 mongoose.connect(
-  'mongodb://localhost:27017/trustana',
+  MONGO_CONF.databaseURL,
   {
     authSource: 'admin',
-    user: 'root',
-    pass: 'example',
+    user: MONGO_CONF.user,
+    pass: MONGO_CONF.pass,
   },
   function (err) {
     if (err) {
@@ -37,6 +37,5 @@ app.listen(port, 'localhost', function (err) {
     console.log(err);
     process.exit(-1);
   }
-
   console.log(`Server listening to port http://localhost:${port}`);
 });

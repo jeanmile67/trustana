@@ -1,11 +1,16 @@
 import { mongooseRequestSchema } from '../model/requestSchema.js';
+import { callRequest } from '../service/scheduler.js';
 
 const requestController = {
   addRequest(data) {
     return new Promise((resolve, reject) => {
       console.log(data);
-      const Request = mongooseRequestSchema(data);
-      Request.save()
+      const request = mongooseRequestSchema(data);
+      callRequest(request);
+
+      // Save the request on bdd
+      request
+        .save()
         .then(function () {
           resolve({ status: 200, message: 'Request inserted Successfully' });
         })
