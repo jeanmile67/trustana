@@ -1,27 +1,36 @@
 import { mongooseRequestSchema } from '../model/requestSchema.js';
-import { callRequest } from '../service/requestService.js';
+import { schedule } from '../service/jobs/scheduler.js';
 
 const requestController = {
   addRequest(data) {
     return new Promise((resolve, reject) => {
-      console.log(data);
-      const request = mongooseRequestSchema(data);
-      callRequest(request);
+      const requestSchema = mongooseRequestSchema(data);
 
       // Save the request on bdd
-      request
-        .save()
-        .then(function () {
+      // const futureRequest = requestSchema
+      //   .save()
+      //   .then(() => {
+      //     resolve({ status: 200, message: 'Request inserted Successfully' });
+      //   })
+      //   .catch((err) => {
+      //     reject({ status: 500, message: `Error ${err}` });
+      //   });
+
+      // Create request job
+
+      const futureJob = schedule
+        .requestApi(data)
+        .then(() => {
           resolve({ status: 200, message: 'Request inserted Successfully' });
         })
-        .catch(function (err) {
+        .catch((err) => {
           reject({ status: 500, message: `Error ${err}` });
         });
-    });
-  },
-  getRequest(data) {
-    return new Promise((resolve) => {
-      resolve({ status: 200, message: 'TODO' });
+
+      // Promise.all([futureRequest])
+      //   .then(resolve('Request inserted Successfully'))
+      //   .error(reject('Error inserted Successfully'));
+      return futureJob;
     });
   },
 };

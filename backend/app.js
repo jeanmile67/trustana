@@ -34,9 +34,14 @@ mongoose.connect(
 );
 
 // agenda
+(async function () {
+  await agenda.start();
+})();
+
 agenda
-  .on('ready', async () => console.log('Agenda connect to Mongo'))
-  .on('error', async () => console.log('Agenda connection error !'));
+  .on('ready', () => console.log('Agenda connection to Mongo successful'))
+  .on('start', (job) => console.log('Job %s starting', job.attrs.name))
+  .on('error', () => console.log('Agenda connection to Mongo error !'));
 
 // Express
 app.listen(port, 'localhost', function (err) {

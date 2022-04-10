@@ -3,7 +3,7 @@ import requestController from '../controller/requestController.js';
 
 export const router = express.Router();
 
-router.post('/api/request', function (req, res) {
+router.post('/api/request', (req, res) => {
   requestController
     .addRequest(req.body)
     .then((data) => {
