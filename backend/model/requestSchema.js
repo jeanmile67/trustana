@@ -18,10 +18,10 @@ const requestSchema = new mongoose.Schema({
   header: String,
   payload: String,
   auth: String,
-  created: { type: Date, default: Date.now() },
+  created: { type: Date, default: Date.now },
 });
 
 
-export const mongooseRequestSchema = mongoose.model('Request', requestSchema);
+export const mongooseRequestSchema = mongoose.model('request_query', requestSchema);
 
 export default requestSchema;

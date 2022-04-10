@@ -2,9 +2,12 @@ import { Agenda } from 'agenda/es.js';
 import mongoose from 'mongoose';
 import allDefinitions from './definition.js';
 
-export const agenda = new Agenda({
+const connectionOpts = {
   mongo: mongoose.connection,
-});
+  db: { collection: 'agenda_jobs' },
+};
+
+export const agenda = new Agenda(connectionOpts);
 
 // Define all agenda jobs
 allDefinitions(agenda);

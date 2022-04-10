@@ -1,12 +1,10 @@
-import { mongooseRequestSchema } from '../model/requestSchema.js';
 import { schedule } from '../service/jobs/scheduler.js';
 
 const requestController = {
   addRequest(data) {
     return new Promise((resolve, reject) => {
-      const requestSchema = mongooseRequestSchema(data);
-
       // Save the request on bdd
+      // const requestSchema = mongooseRequestSchema(data);
       // const futureRequest = requestSchema
       //   .save()
       //   .then(() => {
@@ -17,7 +15,6 @@ const requestController = {
       //   });
 
       // Create request job
-
       const futureJob = schedule
         .requestApi(data)
         .then(() => {
