@@ -6,20 +6,19 @@ const requestController = {
     return new Promise((resolve, reject) => {
       console.log('requestController', data);
 
-      // Save the request on bdd
-      const futureSaveQuery = saveRequestQuery(data);
-
       // Create request job
-      const futureJob = schedule
+      return schedule
         .requestApi(data)
-        .then(() => {
-          return resolve({ status: 200, message: 'Job launch Successfully' });
+        .then((job) => {
+          // Save the request and the jobId on bdd
+          const agendaJobId = job.attrs._id;
+          saveRequestQuery(data, agendaJobId);
+
+          return resolve({ status: 200, message: `Job #${agendaJobId} launch Successfully` });
         })
         .catch((err) => {
           return reject({ status: 500, message: `Error ${err}` });
         });
-
-      return Promise.all([futureSaveQuery, futureJob]);
     });
   },
 };

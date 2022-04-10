@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 const requestQuerySchema = new mongoose.Schema({
+  agendaJobId: mongoose.ObjectId,
   url: {
     type: String,
     require: true,

@@ -3,8 +3,8 @@ import { mongooseRequestQuerySchema } from '../model/requestQuerySchema.js';
 import { mongooseRequestResultSchema } from '../model/requestResultSchema.js';
 
 // Save frontend request on mongo
-export const saveRequestQuery = async (data) => {
-  const requestQuerySchema = mongooseRequestQuerySchema(data);
+export const saveRequestQuery = async (data, agendaJobId) => {
+  const requestQuerySchema = mongooseRequestQuerySchema({ data, agendaJobId });
 
   return new Promise((resolve, reject) => {
     requestQuerySchema
@@ -32,7 +32,6 @@ export const saveRequestResult = async (data) => {
 
 // Get result from a Job
 export const getResultByJob = async (jobId) => {
-  console.log('inside getResultByJob', jobId);
   const query = { agendaJobId: new mongoose.Types.ObjectId(jobId) };
 
   return new Promise((resolve, reject) => {
