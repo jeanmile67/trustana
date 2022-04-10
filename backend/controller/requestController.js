@@ -1,5 +1,5 @@
 import { mongooseRequestSchema } from '../model/requestSchema.js';
-import { callRequest } from '../service/scheduler.js';
+import { callRequest } from '../service/requestService.js';
 
 const requestController = {
   addRequest(data) {

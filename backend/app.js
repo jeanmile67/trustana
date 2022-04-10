@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { formatISO9075 } from 'date-fns';
 import { EXPRESS_CONF, MONGO_CONF } from './config.js';
 import { router as indexRoute } from './routes/paths.js';
+import { agenda } from './service/jobs/index.js';
 
 const app = express();
 const port = EXPRESS_CONF.port || 5000;
@@ -15,6 +16,7 @@ app.use(
 app.use(express.json());
 app.use(indexRoute);
 
+// Mongo
 mongoose.connect(
   MONGO_CONF.databaseURL,
   {
@@ -31,6 +33,12 @@ mongoose.connect(
   }
 );
 
+// agenda
+agenda
+  .on('ready', async () => console.log('Agenda connect to Mongo'))
+  .on('error', async () => console.log('Agenda connection error !'));
+
+// Express
 app.listen(port, 'localhost', function (err) {
   console.log(formatISO9075(Date.now(), { representation: 'time' }));
   if (err) {
