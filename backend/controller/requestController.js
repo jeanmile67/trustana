@@ -1,33 +1,27 @@
 import { schedule } from '../service/jobs/scheduler.js';
+import { saveRequestQuery } from '../service/mongoService.js';
 
 const requestController = {
   addRequest(data) {
     return new Promise((resolve, reject) => {
+      console.log('requestController', data);
+
       // Save the request on bdd
-      // const requestSchema = mongooseRequestSchema(data);
-      // const futureRequest = requestSchema
-      //   .save()
-      //   .then(() => {
-      //     resolve({ status: 200, message: 'Request inserted Successfully' });
-      //   })
-      //   .catch((err) => {
-      //     reject({ status: 500, message: `Error ${err}` });
-      //   });
+      const futureSaveQuery = saveRequestQuery(data);
 
       // Create request job
       const futureJob = schedule
         .requestApi(data)
         .then(() => {
-          resolve({ status: 200, message: 'Request inserted Successfully' });
+          return resolve({ status: 200, message: 'Job launch Successfully' });
         })
         .catch((err) => {
-          reject({ status: 500, message: `Error ${err}` });
+          return reject({ status: 500, message: `Error ${err}` });
         });
 
-      // Promise.all([futureRequest])
-      //   .then(resolve('Request inserted Successfully'))
-      //   .error(reject('Error inserted Successfully'));
-      return futureJob;
+      return Promise.all([futureSaveQuery, futureJob]);
+        // .then(resolve('Request inserted & Job launch successfully'))
+        // .error(reject('Error inserting query or job does not launch'));
     });
   },
 };

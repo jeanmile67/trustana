@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const requestSchema = new mongoose.Schema({
+const requestQuerySchema = new mongoose.Schema({
   url: {
     type: String,
     require: true,
@@ -22,6 +22,6 @@ const requestSchema = new mongoose.Schema({
 });
 
 
-export const mongooseRequestSchema = mongoose.model('request_query', requestSchema);
+export const mongooseRequestQuerySchema = mongoose.model('request_query', requestQuerySchema);
 
-export default requestSchema;
+export default requestQuerySchema;
