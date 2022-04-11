@@ -10,11 +10,17 @@ export const callRequest = async (request, agendaJobId) => {
     url,
   })
     .then((response) => {
-      return { statusCode: response.status, duration: response.duration };
+      return {
+        statusCode: response.status,
+        duration: response.duration,
+        statusText: response.statusText,
+      };
     })
     .catch((error) => {
-      console.log(error.toJSON());
-      return error.toJSON();
+      return {
+        statusCode: error.response.status,
+        statusText: error.response.statusText,
+      };
     });
 
   saveRequestResult({ agendaJobId, url, created: new Date(), ...futureResultRequest });

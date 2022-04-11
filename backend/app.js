@@ -1,6 +1,5 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { formatISO9075 } from 'date-fns';
 import { EXPRESS_CONF, MONGO_CONF } from './config.js';
 import { router as indexRoute } from './routes/paths.js';
 import { agenda } from './service/jobs/index.js';
@@ -45,7 +44,6 @@ agenda
 
 // Express
 app.listen(port, 'localhost', function (err) {
-  console.log(formatISO9075(Date.now(), { representation: 'time' }));
   if (err) {
     console.log(err);
     process.exit(-1);

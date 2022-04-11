@@ -11,6 +11,3 @@ export const agenda = new Agenda(connectionOpts);
 
 // Define all agenda jobs
 allDefinitions(agenda);
-
-// logs all registered jobs
-console.log({ jobs: agenda._definitions });
