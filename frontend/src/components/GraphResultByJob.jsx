@@ -10,7 +10,6 @@ const GraphResultByJob = (jobId) => {
   const [error, setError] = useState(false);
 
   if (!error && !isLoaded) {
-    console.log("inside error", error);
     axios
       .get("http://localhost:5000/api/results?jobId=6253df686c135c57e9f297c4")
       .then(({ data }) => {

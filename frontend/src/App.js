@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material";
 import Container from "@mui/material/Container";
 import JobTable from "./components/JobTable";
-import GraphResultByJob from "./components/GraphResultByJob";
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
           Jobs List
         </Typography>
         <JobTable />
-        <GraphResultByJob />
       </Container>
     </div>
   );
