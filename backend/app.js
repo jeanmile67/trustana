@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import { EXPRESS_CONF, MONGO_CONF } from './config.js';
 import { router as indexRoute } from './routes/paths.js';
 import { agenda } from './service/jobs/index.js';
@@ -7,12 +8,21 @@ import { agenda } from './service/jobs/index.js';
 const app = express();
 const port = EXPRESS_CONF.port || 5000;
 
+// Enable cors from localhost
+const corsOptions = {
+  origin: 'http://localhost:3000',
+};
+app.use(cors(corsOptions));
+
+// Parse request body
 app.use(
   express.urlencoded({
     extended: true,
   })
 );
 app.use(express.json());
+
+// Router
 app.use(indexRoute);
 
 // Mongo
