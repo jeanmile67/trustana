@@ -33,7 +33,7 @@ const errorHandler = async (currentError, jobId) => {
   const latestRequestResult = await getLatestResultByJobId(jobId).then((res) => _.head(res));
 
   // We send an email if the previous status is different then the current status code error
-  if (latestRequestResult?.statusCode !== currentError.response.status) {
+  if (latestRequestResult?.statusCode !== currentError?.response?.status) {
     getAllReceiverEmail()
       .then((receivers) => {
         sendErrorEmail(currentError, receivers)

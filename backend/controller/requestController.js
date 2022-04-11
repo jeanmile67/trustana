@@ -4,8 +4,6 @@ import { saveRequestQuery } from '../service/mongoService.js';
 const requestController = {
   addRequest(data) {
     return new Promise((resolve, reject) => {
-      console.log('requestController', data);
-
       // Create request job
       return schedule
         .requestApi(data)
