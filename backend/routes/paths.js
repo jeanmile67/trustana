@@ -2,6 +2,7 @@ import express from 'express';
 import _ from 'lodash';
 import requestController from '../controller/requestController.js';
 import resultController from '../controller/resultController.js';
+import jobsController from '../controller/jobController.js';
 
 export const router = express.Router();
 
@@ -34,8 +35,17 @@ router.post('/api/request', function (req, res) {
   }
 });
 
-router.get('/api/request', async (req, res) => {
+router.get('/api/result', async (req, res) => {
   const { jobId } = req.query;
-  const futureResultJobById = await resultController.getResultByJobId(jobId);
+  if (!jobId) {
+    res.send('Error: An jobId should be provide');
+  } else {
+    const futureResultJobById = await resultController.getResultByJobId(jobId);
+    res.send(futureResultJobById);
+  }
+});
+
+router.get('/api/jobs', async (req, res) => {
+  const futureResultJobById = await jobsController.getJobs();
   res.send(futureResultJobById);
 });

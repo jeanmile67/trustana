@@ -50,7 +50,7 @@ export const getResultByJob = async (jobId) => {
 
 // Get all error receivers
 export const getAllReceiverEmail = async () => {
-  return mongooseErrorReceiverSchema.find({}).limit(100).exec();
+  return mongooseErrorReceiverSchema.find().limit(100).exec();
 };
 
 // Get latest request request code
