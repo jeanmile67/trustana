@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { mongooseRequestQuerySchema } from '../model/requestQuerySchema.js';
 import { mongooseRequestResultSchema } from '../model/requestResultSchema.js';
+import { mongooseErrorReceiverSchema } from '../model/errorReceiverSchema.js';
 
 // Save frontend request on mongo
 export const saveRequestQuery = async (data, agendaJobId) => {
@@ -45,4 +46,9 @@ export const getResultByJob = async (jobId) => {
         reject(err);
       });
   });
+};
+
+// Get all error receivers
+export const getAllReceiverEmail = async () => {
+  return mongooseErrorReceiverSchema.find({}).limit(100).exec();
 };

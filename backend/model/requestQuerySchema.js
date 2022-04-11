@@ -24,5 +24,3 @@ const requestQuerySchema = new mongoose.Schema({
 
 
 export const mongooseRequestQuerySchema = mongoose.model('request_query', requestQuerySchema);
-
-export default requestQuerySchema;
