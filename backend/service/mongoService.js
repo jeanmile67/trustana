@@ -38,7 +38,7 @@ export const getResultByJob = async (jobId) => {
   return new Promise((resolve, reject) => {
     mongooseRequestResultSchema
       .find(query)
-      .limit(100)
+      .limit(50)
       .then((result) => {
         resolve(result);
       })

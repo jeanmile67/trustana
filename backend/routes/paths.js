@@ -35,7 +35,7 @@ router.post('/api/request', function (req, res) {
   }
 });
 
-router.get('/api/result', async (req, res) => {
+router.get('/api/results', async (req, res) => {
   const { jobId } = req.query;
   if (!jobId) {
     res.send('Error: An jobId should be provide');
