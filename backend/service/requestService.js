@@ -1,5 +1,6 @@
+import _ from 'lodash';
 import axiosInstance from '../utils/axios.js';
-import { saveRequestResult, getAllReceiverEmail } from '../service/mongoService.js';
+import { saveRequestResult, getAllReceiverEmail, getLatestResultByJobId } from '../service/mongoService.js';
 import { sendErrorEmail } from '../service/mailService.js';
 
 // request : url, method, header, payload, auth
@@ -18,7 +19,7 @@ export const callRequest = async (request, agendaJobId) => {
       };
     })
     .catch((error) => {
-      errorHandler(error);
+      errorHandler(error, agendaJobId);
       return {
         statusCode: error.response.status,
         statusText: error.response.statusText,
@@ -28,15 +29,19 @@ export const callRequest = async (request, agendaJobId) => {
   saveRequestResult({ agendaJobId, url, created: new Date(), ...futureResultRequest });
 };
 
-const errorHandler = (error) => {
-  console.log('inside errorHandler');
-  getAllReceiverEmail()
-    .then((receivers) => {
-      sendErrorEmail(error, receivers)
-        .then(() => console.log('sending mail'))
-        .catch((error) => console.log('error sending mail', error));
-    })
-    .catch((error) => console.log(`Error retreive recivers : ${error}`));
+const errorHandler = async (currentError, jobId) => {
+  const latestRequestResult = await getLatestResultByJobId(jobId).then((res) => _.head(res));
+
+  // We send an email if the previous status is different then the current status code error
+  if (latestRequestResult?.statusCode !== currentError.response.status) {
+    getAllReceiverEmail()
+      .then((receivers) => {
+        sendErrorEmail(currentError, receivers)
+          .then(() => console.log('sending mail'))
+          .catch((error) => console.log('error sending mail', error));
+      })
+      .catch((error) => console.log(`Error retreive recivers : ${error}`));
+  }
 };
 
 const requestService = {

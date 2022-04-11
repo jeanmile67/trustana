@@ -52,3 +52,9 @@ export const getResultByJob = async (jobId) => {
 export const getAllReceiverEmail = async () => {
   return mongooseErrorReceiverSchema.find({}).limit(100).exec();
 };
+
+// Get latest request request code
+export const getLatestResultByJobId = async (jobId) => {
+  const query = { agendaJobId: new mongoose.Types.ObjectId(jobId) };
+  return mongooseRequestResultSchema.find(query).sort({ created: -1 }).limit(1).exec()
+};
