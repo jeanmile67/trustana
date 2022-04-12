@@ -36,9 +36,9 @@ mongoose.connect(
   function (err) {
     if (err) {
       console.log(err);
-      process.exit(-1);
+    } else {
+      console.log('Connecttion to mongo successful');
     }
-    console.log('connected to DB');
   }
 );
 
@@ -53,10 +53,10 @@ agenda
   .on('error', () => console.log('Agenda connection to Mongo error !'));
 
 // Express
-app.listen(port, 'localhost', function (err) {
+app.listen(port, '0.0.0.0', function (err) {
   if (err) {
     console.log(err);
     process.exit(-1);
   }
-  console.log(`Server listening to port http://localhost:${port}`);
+  console.log(`Server listening to port http://0.0.0.0:${port}`);
 });

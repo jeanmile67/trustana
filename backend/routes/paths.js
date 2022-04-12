@@ -6,6 +6,10 @@ import jobsController from '../controller/jobController.js';
 
 export const router = express.Router();
 
+router.get('/about', function (req, res) {
+  res.send('Trustana backend study case');
+});
+
 router.post('/api/request', function (req, res) {
   if (!req.body?.url) {
     res.send('Error: Your need to send a least an URL');
