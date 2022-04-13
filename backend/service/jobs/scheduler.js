@@ -1,8 +1,7 @@
 import { agenda } from './index.js';
 
 export const schedule = {
-  requestApi: async (data) => {
-    const frequency = data.frequency || 1
-    return agenda.create('request-api', data).repeatEvery(`${frequency} minute`).save();
+  requestApi: async (requestData) => {
+    return agenda.create('request-api', requestData).repeatEvery(`${requestData.data.frequency} minute`).save();
   },
 };

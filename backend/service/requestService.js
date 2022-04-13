@@ -5,11 +5,15 @@ import { sendErrorEmail } from '../service/mailService.js';
 
 // request : url, method, header, payload, auth
 export const callRequest = async (request, agendaJobId) => {
-  const { method, url } = request;
+  const { data, headers, payload, auth } = request;
+
+  const { method, url } = data;
 
   const futureResultRequest = await axiosInstance({
     method,
     url,
+    headers: { auth, ...headers },
+    data: payload,
   })
     .then((response) => {
       return {

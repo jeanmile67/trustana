@@ -16,9 +16,9 @@ const requestQuerySchema = new mongoose.Schema({
     enum: [0.5, 1, 5, 15, 30, 60],
     default: 1,
   },
-  header: String,
-  payload: String,
-  auth: String,
+  headers: JSON,
+  payload: JSON,
+  auth: JSON,
   created: { type: Date, default: Date.now },
 });
 
