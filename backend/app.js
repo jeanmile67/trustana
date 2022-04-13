@@ -49,7 +49,7 @@ mongoose.connect(
 
 agenda
   .on('ready', () => console.log('Agenda connection to Mongo successful'))
-  .on('start', (job) => console.log('Job %s starting', job.attrs.name))
+  .on('start', (job) => console.log('Job %s starting', job.attrs._id))
   .on('error', () => console.log('Agenda connection to Mongo error !'));
 
 // Express

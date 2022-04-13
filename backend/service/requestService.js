@@ -12,15 +12,17 @@ import { sendErrorSMS } from './SMSService.js';
 // request : url, method, header, payload, auth
 export const callRequest = async (request, agendaJobId) => {
   const { data, headers, payload, auth } = request;
-
   const { method, url } = data;
 
-  const futureResultRequest = await axiosInstance({
+  const axiosOption = {
     method,
     url,
-    headers: { auth, ...headers },
-    data: payload,
-  })
+    ...(!auth || (!headers && { headers: { auth, ...headers } })),
+    ...(!payload && { data: payload }),
+  };
+  console.log('callRequest axiosOption:', axiosOption);
+
+  const futureResultRequest = await axiosInstance(axiosOption)
     .then((response) => {
       return {
         statusCode: response.status,
@@ -39,7 +41,7 @@ export const callRequest = async (request, agendaJobId) => {
         statusText: errorStatusText,
       };
 
-      errorHandler(request, errors, agendaJobId);
+      // errorHandler(request, errors, agendaJobId);
 
       return errors;
     });
@@ -67,7 +69,7 @@ const errorHandler = async (request, currentError, jobId) => {
             .catch((error) => console.log('Error sending mail', error));
 
           // sending SMS with Twilio
-          sendErrorSMS(message);
+          // sendErrorSMS(message);
         }
       })
       .catch((error) => console.log(`Error during the fetching of receivers : ${error}`));
