@@ -20,11 +20,11 @@ router.post('/api/request', function (req, res) {
 
     requestController
       .addRequest(requestData)
-      .then((data) => {
-        res.status(data.status).send({ message: data });
+      .then((response) => {
+        res.send(response);
       })
       .catch((err) => {
-        res.status(err.status).send({ message: err.message });
+        res.send(err);
       });
   }
 });

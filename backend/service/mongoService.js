@@ -20,8 +20,8 @@ export const saveRequestQuery = async (req, agendaJobId) => {
   return new Promise((resolve, reject) => {
     requestQuerySchema
       .save()
-      .then(() => resolve({ status: 200, message: 'Query inserted Successfully' }))
-      .catch((err) => reject({ status: 500, message: `Error ${err}` }));
+      .then(() => resolve('Query inserted Successfully'))
+      .catch((err) => reject(`Error ${err}`));
   });
 };
 
@@ -33,10 +33,10 @@ export const saveRequestResult = async (data) => {
     requestResultSchema
       .save()
       .then(() => {
-        resolve({ status: 200, message: 'Result inserted Successfully' });
+        resolve('Result inserted Successfully');
       })
       .catch((err) => {
-        reject({ status: 500, message: `Error ${err}` });
+        reject(`Error ${err}`);
       });
   });
 };
@@ -53,10 +53,10 @@ export const saveIncident = async (request, currentError, agendaJobId) => {
     incidentSchema
       .save()
       .then(() => {
-        resolve({ status: 200, message: 'Incident inserted Successfully' });
+        resolve('Incident inserted Successfully');
       })
       .catch((err) => {
-        reject({ status: 500, message: `Error ${err}` });
+        reject(`Error ${err}`);
       });
   });
 };

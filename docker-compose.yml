@@ -33,3 +33,9 @@ services:
     restart: always
     ports:
       - 3000:3000
+
+  testserver:
+    image: jeanmile/trustana-test_backend
+    restart: always
+    ports:
+      - 5001:5001

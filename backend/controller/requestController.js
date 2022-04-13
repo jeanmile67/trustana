@@ -12,10 +12,10 @@ const requestController = {
           const agendaJobId = job.attrs._id;
           saveRequestQuery(requestData, agendaJobId);
 
-          return resolve({ status: 200, message: `Job #${agendaJobId} launch Successfully` });
+          return resolve(`Job #${agendaJobId} launch Successfully`);
         })
         .catch((err) => {
-          return reject({ status: 500, message: `Error ${err}` });
+          return reject(`Error ${err}`);
         });
     });
   },
