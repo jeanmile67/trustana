@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { mongooseRequestQuerySchema } from '../model/requestQuerySchema.js';
 import { mongooseRequestResultSchema } from '../model/requestResultSchema.js';
 import { mongooseErrorReceiverSchema } from '../model/errorReceiverSchema.js';
+import { mongooseIncidentSchema } from '../model/incidentSchema.js';
 
 // Save frontend request on mongo
 export const saveRequestQuery = async (req, agendaJobId) => {
@@ -19,8 +20,8 @@ export const saveRequestQuery = async (req, agendaJobId) => {
   return new Promise((resolve, reject) => {
     requestQuerySchema
       .save()
-      .then(() => resolve({ status: 200, message: 'Query inserted Successfully' }))
-      .catch((err) => reject({ status: 500, message: `Error ${err}` }));
+      .then(() => resolve('Query inserted Successfully'))
+      .catch((err) => reject(`Error ${err}`));
   });
 };
 
@@ -32,10 +33,30 @@ export const saveRequestResult = async (data) => {
     requestResultSchema
       .save()
       .then(() => {
-        resolve({ status: 200, message: 'Result inserted Successfully' });
+        resolve('Result inserted Successfully');
       })
       .catch((err) => {
-        reject({ status: 500, message: `Error ${err}` });
+        reject(`Error ${err}`);
+      });
+  });
+};
+
+// Save incident
+export const saveIncident = async (request, currentError, agendaJobId) => {
+  const incidentSchema = mongooseIncidentSchema({
+    request,
+    error: JSON.stringify(currentError),
+    agendaJobId: agendaJobId,
+  });
+
+  return new Promise((resolve, reject) => {
+    incidentSchema
+      .save()
+      .then(() => {
+        resolve('Incident inserted Successfully');
+      })
+      .catch((err) => {
+        reject(`Error ${err}`);
       });
   });
 };
@@ -46,6 +67,23 @@ export const getResultByJob = async (jobId) => {
 
   return new Promise((resolve, reject) => {
     mongooseRequestResultSchema
+      .find(query)
+      .limit(50)
+      .then((result) => {
+        resolve(result);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+// Get error list from a Job
+export const getErrorsByJob = async (jobId) => {
+  const query = { agendaJobId: new mongoose.Types.ObjectId(jobId) };
+
+  return new Promise((resolve, reject) => {
+    mongooseIncidentSchema
       .find(query)
       .limit(50)
       .then((result) => {

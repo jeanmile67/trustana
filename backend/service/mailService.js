@@ -7,7 +7,7 @@ const mailgun = {
   apiKey: MAILGUN_CONF.api_key,
 };
 
-export const sendErrorEmail = async (data, receivers) => {
+export const sendErrorEmail = async (message, subject, receivers) => {
   return axios({
     method: 'post',
     url: `${mailgun.baseUrl}/${mailgun.domain}/messages`,
@@ -18,8 +18,8 @@ export const sendErrorEmail = async (data, receivers) => {
     params: {
       from: 'Trustana Case Study <casestudy@trustana.com>',
       to: receivers.map((receiver) => receiver.mail),
-      subject: `Error on ${data.config.url} at ${data.config.metadata.startTime}`,
-      text: `Error on ${data.config.url} at ${data.config.metadata.startTime} with code ${data.response.status} (${data.response.statusText})`,
+      subject: subject,
+      text: message,
     },
   });
 };

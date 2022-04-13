@@ -3,6 +3,7 @@ import { parseRequest } from '../utils/parser.js';
 import requestController from '../controller/requestController.js';
 import resultController from '../controller/resultController.js';
 import jobsController from '../controller/jobController.js';
+import incidentController from '../controller/incidentController.js';
 
 export const router = express.Router();
 
@@ -19,11 +20,11 @@ router.post('/api/request', function (req, res) {
 
     requestController
       .addRequest(requestData)
-      .then((data) => {
-        res.status(data.status).send({ message: data });
+      .then((response) => {
+        res.send(response);
       })
       .catch((err) => {
-        res.status(err.status).send({ message: err.message });
+        res.send(err);
       });
   }
 });
@@ -38,7 +39,33 @@ router.get('/api/results', async (req, res) => {
   }
 });
 
-router.get('/api/jobs', async (req, res) => {
+router.get('/api/results/errorsByJob', async (req, res) => {
+  const { jobId } = req.query;
+  if (!jobId) {
+    res.send('Error: An jobId should be provide');
+  } else {
+    const futureErrorJobById = await incidentController.getErrorsByJobId(jobId);
+    res.send(futureErrorJobById);
+  }
+});
+
+router.get('/api/jobs/active', async (req, res) => {
   const futureResultJobById = await jobsController.getJobs();
   res.send(futureResultJobById);
+});
+
+router.post('/api/job/cancel', async (req, res) => {
+  const { jobId } = req.body;
+  if (!jobId) {
+    res.send('Error: Your need to give a jobId');
+  } else {
+    jobsController
+      .cancelJob(jobId)
+      .then((res) => {
+        return res.send(`Cancel job ${jobId} successfully`);
+      })
+      .catch((error) => {
+        return res.send(`Error during job cancellation ${jobId} : ${error}`);
+      });
+  }
 });

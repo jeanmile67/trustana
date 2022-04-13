@@ -7,7 +7,7 @@ function App() {
     <div>
       <Container>
         <Typography variant="h5" gutterBottom sx={{ textAlign: "left" }}>
-          Jobs List
+          Current Jobs List
         </Typography>
         <JobTable />
       </Container>
