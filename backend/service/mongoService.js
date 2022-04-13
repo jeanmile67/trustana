@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { mongooseRequestQuerySchema } from '../model/requestQuerySchema.js';
 import { mongooseRequestResultSchema } from '../model/requestResultSchema.js';
 import { mongooseErrorReceiverSchema } from '../model/errorReceiverSchema.js';
+import { mongooseIncidentSchema } from '../model/incidentSchema.js';
 
 // Save frontend request on mongo
 export const saveRequestQuery = async (req, agendaJobId) => {
@@ -33,6 +34,26 @@ export const saveRequestResult = async (data) => {
       .save()
       .then(() => {
         resolve({ status: 200, message: 'Result inserted Successfully' });
+      })
+      .catch((err) => {
+        reject({ status: 500, message: `Error ${err}` });
+      });
+  });
+};
+
+// Save incident
+export const saveIncident = async (request, currentError, agendaJobId) => {
+  const incidentSchema = mongooseIncidentSchema({
+    request,
+    error: JSON.stringify(currentError),
+    agendaJobId: agendaJobId,
+  });
+
+  return new Promise((resolve, reject) => {
+    incidentSchema
+      .save()
+      .then(() => {
+        resolve({ status: 200, message: 'Incident inserted Successfully' });
       })
       .catch((err) => {
         reject({ status: 500, message: `Error ${err}` });
