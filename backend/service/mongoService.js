@@ -78,6 +78,23 @@ export const getResultByJob = async (jobId) => {
   });
 };
 
+// Get error list from a Job
+export const getErrorsByJob = async (jobId) => {
+  const query = { agendaJobId: new mongoose.Types.ObjectId(jobId) };
+
+  return new Promise((resolve, reject) => {
+    mongooseIncidentSchema
+      .find(query)
+      .limit(50)
+      .then((result) => {
+        resolve(result);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
 // Get all error receivers
 export const getAllReceiverEmail = async () => {
   return mongooseErrorReceiverSchema.find().limit(100).exec();

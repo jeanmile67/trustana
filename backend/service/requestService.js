@@ -20,7 +20,6 @@ export const callRequest = async (request, agendaJobId) => {
     ...(!auth || (!headers && { headers: { auth, ...headers } })),
     ...(!payload && { data: payload }),
   };
-  console.log('callRequest axiosOption:', axiosOption);
 
   const futureResultRequest = await axiosInstance(axiosOption)
     .then((response) => {
@@ -41,7 +40,7 @@ export const callRequest = async (request, agendaJobId) => {
         statusText: errorStatusText,
       };
 
-      // errorHandler(request, errors, agendaJobId);
+      errorHandler(request, errors, agendaJobId);
 
       return errors;
     });

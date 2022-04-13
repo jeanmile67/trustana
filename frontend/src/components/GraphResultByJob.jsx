@@ -2,13 +2,11 @@ import { useState } from "react";
 import _ from "lodash";
 import axios from "axios";
 import Chart from "react-apexcharts";
-import { Card } from "@mui/material";
 import ErrorResultList from "./ErrorResultList";
 
 const GraphResultByJob = ({ jobId }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [requestResponse, setRequestResponse] = useState([]);
-  const [requestErrorResponse, setRequestErrorResponse] = useState([]);
   const [error, setError] = useState(false);
 
   if (!error && !isLoaded) {
@@ -18,12 +16,10 @@ const GraphResultByJob = ({ jobId }) => {
         setIsLoaded(true);
         const requestPartition = _.partition(data, { statusCode: 200 });
         const requestOK = requestPartition[0];
-        const requestError = requestPartition[1];
         const formatedRequest = _.map(
           requestOK,
           _.partialRight(_.pick, ["duration", "created"])
         );
-        setRequestErrorResponse(requestError);
         setRequestResponse(formatedRequest);
       })
       .catch((error) => {
@@ -51,7 +47,7 @@ const GraphResultByJob = ({ jobId }) => {
   };
 
   return (
-    <Card>
+    <>
       {!_.isEmpty(requestResponse) && (
         <Chart
           options={chartData.options}
@@ -59,8 +55,8 @@ const GraphResultByJob = ({ jobId }) => {
           type="bar"
         />
       )}
-      <ErrorResultList errors={requestErrorResponse} />
-    </Card>
+      <ErrorResultList jobId={jobId} />
+    </>
   );
 };
 

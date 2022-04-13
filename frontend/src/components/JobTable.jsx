@@ -23,7 +23,7 @@ const JobTable = () => {
   if (!error && !isLoaded) {
     console.log("inside error", error);
     axios
-      .get("http://localhost:5000/api/jobs")
+      .get("http://localhost:5000/api/jobs/active")
       .then(({ data }) => {
         setIsLoaded(true);
         setJobs(data);

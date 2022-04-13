@@ -3,6 +3,7 @@ import { parseRequest } from '../utils/parser.js';
 import requestController from '../controller/requestController.js';
 import resultController from '../controller/resultController.js';
 import jobsController from '../controller/jobController.js';
+import incidentController from '../controller/incidentController.js';
 
 export const router = express.Router();
 
@@ -38,12 +39,17 @@ router.get('/api/results', async (req, res) => {
   }
 });
 
-router.get('/api/jobs/active', async (req, res) => {
-  const futureResultJobById = await jobsController.getJobs();
-  res.send(futureResultJobById);
+router.get('/api/results/errorsByJob', async (req, res) => {
+  const { jobId } = req.query;
+  if (!jobId) {
+    res.send('Error: An jobId should be provide');
+  } else {
+    const futureErrorJobById = await incidentController.getErrorsByJobId(jobId);
+    res.send(futureErrorJobById);
+  }
 });
 
-router.get('/api/jobs/done', async (req, res) => {
+router.get('/api/jobs/active', async (req, res) => {
   const futureResultJobById = await jobsController.getJobs();
   res.send(futureResultJobById);
 });
