@@ -4,8 +4,17 @@ import { mongooseRequestResultSchema } from '../model/requestResultSchema.js';
 import { mongooseErrorReceiverSchema } from '../model/errorReceiverSchema.js';
 
 // Save frontend request on mongo
-export const saveRequestQuery = async (data, agendaJobId) => {
-  const requestQuerySchema = mongooseRequestQuerySchema({ data, agendaJobId });
+export const saveRequestQuery = async (req, agendaJobId) => {
+  const { data, headers, payload, auth } = req;
+  const requestQuerySchema = mongooseRequestQuerySchema({
+    url: data.url,
+    method: data.method,
+    frequency: data.frequency,
+    headers,
+    payload,
+    auth,
+    agendaJobId,
+  });
 
   return new Promise((resolve, reject) => {
     requestQuerySchema
