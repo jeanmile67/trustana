@@ -15,3 +15,8 @@ export const MAILGUN_CONF = {
   domain: process.env.MAILGUN_DOMAIN,
   api_key: process.env.MAILGUN_API_KEY,
 };
+
+export const TWILIO_CONF = {
+  account_sid: process.env.TWILIO_ACCOUNT_SID,
+  auth_token: process.env.TWILIO_AUTH_TOKEN,
+};
