@@ -38,7 +38,28 @@ router.get('/api/results', async (req, res) => {
   }
 });
 
-router.get('/api/jobs', async (req, res) => {
+router.get('/api/jobs/active', async (req, res) => {
   const futureResultJobById = await jobsController.getJobs();
   res.send(futureResultJobById);
+});
+
+router.get('/api/jobs/done', async (req, res) => {
+  const futureResultJobById = await jobsController.getJobs();
+  res.send(futureResultJobById);
+});
+
+router.post('/api/job/cancel', async (req, res) => {
+  const { jobId } = req.body;
+  if (!jobId) {
+    res.send('Error: Your need to give a jobId');
+  } else {
+    jobsController
+      .cancelJob(jobId)
+      .then((res) => {
+        return res.send(`Cancel job ${jobId} successfully`);
+      })
+      .catch((error) => {
+        return res.send(`Error during job cancellation ${jobId} : ${error}`);
+      });
+  }
 });
