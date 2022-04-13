@@ -14,11 +14,12 @@ export const callRequest = async (request, agendaJobId) => {
   const { data, headers, payload, auth } = request;
   const { method, url } = data;
 
+  console.log(request);
   const axiosOption = {
     method,
     url,
-    ...(!auth || (!headers && { headers: { auth, ...headers } })),
-    ...(!payload && { data: payload }),
+    ...((!_.isEmpty(auth) || !_.isEmpty(headers)) && { headers: { auth, ...headers } }),
+    ...(!_.isEmpty(payload) && { data: payload }),
   };
 
   const futureResultRequest = await axiosInstance(axiosOption)
